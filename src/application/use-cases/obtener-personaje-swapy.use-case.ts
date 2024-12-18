@@ -1,6 +1,6 @@
 import { ISwapiResponse } from './../../infrastructure/adapters/external/swapi/swapi.types';
 import { Inject, Injectable } from "@nestjs/common";
-import { SWAPI_SERVICE_KEY } from "src/common/constants/constants";
+import { SWAPI_SERVICE_KEY } from "../../common/constants/constants";
 import { ISwapiService } from "../ports/output/swapi.interface";
 
 @Injectable()

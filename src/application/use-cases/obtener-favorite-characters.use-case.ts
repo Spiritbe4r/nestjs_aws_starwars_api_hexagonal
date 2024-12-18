@@ -1,7 +1,7 @@
 import { FavoriteCharacterResponseDto } from '../dto/favorite-character-response.dto';
 import { FavoriteCharacterMapper } from "../mappers/favorite-character.mapper";
 import { Inject, Injectable } from '@nestjs/common';
-import { FAVORITES_CHARACTER_REPO_KEY } from 'src/common/constants/constants';
+import { FAVORITES_CHARACTER_REPO_KEY } from '../../common/constants/constants';
 import { IFavoriteCharacterRepository } from '../ports/output/repository.interface';
 
 @Injectable()

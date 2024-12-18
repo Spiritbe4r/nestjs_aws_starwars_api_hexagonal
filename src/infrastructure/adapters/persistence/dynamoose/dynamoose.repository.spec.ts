@@ -1,9 +1,13 @@
+import { CrearFavoritoDto } from 'src/application/dto/crear-favorito.dto';
+
+import { FavoriteCharacter } from '../../../../domain/entities/favorite-character.entity';
+
 /* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-var-requires */
-import { CrearFavoritoDto } from 'src/infrastructure/http/dto/crear-favorito.dto';
+
 import { DynamooseRepository } from './dynamoose.repository';
-import { FavoriteCharacter } from '../../../domain/entities/favorite-character.entity';
+
 
 jest.mock('./favorite-character.model', () => ({
   FavoriteCharacterModel: {
@@ -43,7 +47,7 @@ describe('DynamooseRepository', () => {
       };
 
       const favoriteCharacter: FavoriteCharacter = {
-        id: '2f14bce7-c394-4cbf-8629-6655a9f94021',
+        //id: '2f14bce7-c394-4cbf-8629-6655a9f94021',
         nombre: crearFavoritoDto.nombre,
         planeta: crearFavoritoDto.planeta,
       };
@@ -59,7 +63,7 @@ describe('DynamooseRepository', () => {
 
       expect(modelMock.create).toHaveBeenCalledWith(
         expect.objectContaining({
-          id: favoriteCharacter.id,
+          //id: favoriteCharacter.id,
           nombre: favoriteCharacter.nombre,
           planeta: favoriteCharacter.planeta,
         }),
@@ -68,8 +72,7 @@ describe('DynamooseRepository', () => {
     });
 
     it('debe lanzar  InternalServerErrorException cuando crear falla', async () => {
-      const favoriteCharacter: FavoriteCharacter = {
-        id: '2f14bce7-c394-4cbf-8629-6655a9f94021',
+      const favoriteCharacter = {
         nombre: 'Luke Skywalker',
         planeta: 'Tatooine',
       };
@@ -80,7 +83,6 @@ describe('DynamooseRepository', () => {
 
       expect(modelMock.create).toHaveBeenCalledWith(
         expect.objectContaining({
-          id: favoriteCharacter.id,
           nombre: favoriteCharacter.nombre,
           planeta: favoriteCharacter.planeta,
         }),

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { CrearFavoritoDto } from 'src/application/dto/crear-favorito.dto';
-import { FavoriteCharacterResponseDto } from 'src/application/dto/favorite-character-response.dto';
+import { CrearFavoritoDto } from '../../../application/dto/crear-favorito.dto';
+import { FavoriteCharacterResponseDto } from '../../../application/dto/favorite-character-response.dto';
 
 export interface FavoritesUseCases {
   createFavorite(data: CrearFavoritoDto): Promise<FavoriteCharacterResponseDto>;

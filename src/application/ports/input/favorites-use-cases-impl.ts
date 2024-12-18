@@ -2,11 +2,11 @@
 import { CreateFavoriteCharacterUseCase } from './../../use-cases/create-favorite-character.use-case';
 import { Injectable } from '@nestjs/common';
 import { FavoritesUseCases } from './favorites.use-cases';
-import { GetFavoriteCharactersUseCase } from 'src/application/use-cases/obtener-favorite-characters.use-case';
-import { GetSwapyCharacterUseCase } from 'src/application/use-cases/obtener-personaje-swapy.use-case';
-import { FavoriteCharacterResponseDto } from 'src/application/dto/favorite-character-response.dto';
-import { CrearFavoritoDto } from 'src/application/dto/crear-favorito.dto';
-import { ISwapiResponse } from 'src/infrastructure/adapters/external/swapi/swapi.types';
+import { GetFavoriteCharactersUseCase } from '../../../application/use-cases/obtener-favorite-characters.use-case';
+import { GetSwapyCharacterUseCase } from '../../../application/use-cases/obtener-personaje-swapy.use-case';
+import { FavoriteCharacterResponseDto } from '../../../application/dto/favorite-character-response.dto';
+import { CrearFavoritoDto } from '../../../application/dto/crear-favorito.dto';
+import { ISwapiResponse } from '../../../infrastructure/adapters/external/swapi/swapi.types';
 
 
 @Injectable()

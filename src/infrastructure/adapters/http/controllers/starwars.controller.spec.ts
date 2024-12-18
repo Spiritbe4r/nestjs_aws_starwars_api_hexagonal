@@ -3,14 +3,15 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { StarwarsController } from './starwars.controller';
 
 import { BadRequestException, NotFoundException } from '@nestjs/common';
-import { IFavoriteCharacterRepository } from 'src/application/ports/output/repository.interface';
-import { ISwapiService } from 'src/application/ports/output/swapi.interface';
-import { FavoriteCharacterService } from 'src/application/services/favorite-character.service';
+import { IFavoriteCharacterRepository } from '../../../../application/ports/output/repository.interface';
+import { ISwapiService } from '../../../../application/ports/output/swapi.interface';
 
-import { FavoriteCharacter } from 'src/domain/entities/favorite-character.entity';
-import { FavoriteCharacterMapper } from 'src/application/mappers/favorite-character.mapper';
+import { FavoriteCharacter } from '../../../../domain/entities/favorite-character.entity';
+import { FavoriteCharacterMapper } from '../../../..//application/mappers/favorite-character.mapper';
 import { CrearFavoritoDto } from '../../../../application/dto/crear-favorito.dto';
 import { FavoriteCharacterResponseDto } from '../../../../application/dto/favorite-character-response.dto';
+import { FavoritesUseCases } from '../../../..//application/ports/input/favorites.use-cases';
+import { FavoritesUseCasesImpl } from '../../../..//application/ports/input/favorites-use-cases-impl';
 
 export const mockRepository: Partial<IFavoriteCharacterRepository> = {
   crear: jest.fn(),
@@ -25,15 +26,15 @@ export const mockSwapiService: Partial<ISwapiService> = {
   }),
 };
 
-export const mockFavoriteCharacterService: Partial<FavoriteCharacterService> = {
-  crearFavorito: jest.fn(),
-  obtenerFavoritos: jest.fn(),
-  obtenerPersonajeSWAPI: jest.fn(),
+export const mockFavoriteCharacterService: Partial<FavoritesUseCases> = {
+  createFavorite: jest.fn(),
+  getFavorites: jest.fn(),
+  getSwapyCharacter: jest.fn(),
 };
 
 describe('StarwarsController', () => {
   let controller: StarwarsController;
-  let service: FavoriteCharacterService;
+  let service: FavoritesUseCases;
   let swapiService: ISwapiService;
 
   beforeEach(async () => {
@@ -41,7 +42,7 @@ describe('StarwarsController', () => {
       controllers: [StarwarsController],
       providers: [
         {
-          provide: FavoriteCharacterService,
+          provide: 'FavoritesUseCases',
           useValue: mockFavoriteCharacterService,
         },
         {
@@ -56,7 +57,7 @@ describe('StarwarsController', () => {
     }).compile();
 
     controller = module.get<StarwarsController>(StarwarsController);
-    service = module.get<FavoriteCharacterService>(FavoriteCharacterService);
+    service = module.get<FavoritesUseCases>('FavoritesUseCases');
     swapiService = module.get<ISwapiService>('SwapiInterface');
   });
 
@@ -84,11 +85,11 @@ describe('StarwarsController', () => {
 
     const responseDto = FavoriteCharacterMapper.toResponseDto(createdEntity);
 
-    (service.crearFavorito as jest.Mock).mockResolvedValue(createdEntity);
+    (service.createFavorite as jest.Mock).mockResolvedValue(createdEntity);
 
     const result = await controller.crearFavorito(createDto);
 
-    expect(service.crearFavorito).toHaveBeenCalledWith(createDto);
+    expect(service.createFavorite).toHaveBeenCalledWith(createDto);
     expect(result).toEqual(responseDto);
   });
 
@@ -116,16 +117,16 @@ describe('StarwarsController', () => {
           FavoriteCharacterMapper.toResponseDto(entity),
         );
 
-      (service.obtenerFavoritos as jest.Mock).mockResolvedValue(responseDtos);
+      (service.getFavorites as jest.Mock).mockResolvedValue(responseDtos);
 
       const result = await controller.obtenerFavoritos();
 
-      expect(service.obtenerFavoritos).toHaveBeenCalled();
+      expect(service.getFavorites).toHaveBeenCalled();
       expect(result).toEqual(responseDtos);
     });
 
     it('debe lanzasr un InternalServerErrorException cuando el servicio obtenerTodosFavoritos lanza una excepción', async () => {
-      (service.obtenerFavoritos as jest.Mock).mockRejectedValue(
+      (service.getFavorites as jest.Mock).mockRejectedValue(
         new BadRequestException('Error al obtener todos'),
       );
 
@@ -133,7 +134,7 @@ describe('StarwarsController', () => {
         BadRequestException,
       );
 
-      expect(service.obtenerFavoritos).toHaveBeenCalled();
+      expect(service.getFavorites).toHaveBeenCalled();
     });
   });
 
@@ -147,16 +148,16 @@ describe('StarwarsController', () => {
         updatedAt: new Date(),
       };
 
-      (service.obtenerPersonajeSWAPI as jest.Mock).mockResolvedValue(favorito);
+      (service.getSwapyCharacter as jest.Mock).mockResolvedValue(favorito);
 
       const result = await controller.obtenerPersonaje('1');
 
-      expect(service.obtenerPersonajeSWAPI).toHaveBeenCalledWith('1');
+      expect(service.getSwapyCharacter).toHaveBeenCalledWith('1');
       expect(result).toEqual(favorito);
     });
 
     it('debe lanzar NotFoundException cuando el personaje favorito no se encuentra', async () => {
-      (service.obtenerPersonajeSWAPI as jest.Mock).mockRejectedValue(
+      (service.getSwapyCharacter as jest.Mock).mockRejectedValue(
         new NotFoundException('Error al obtener todos'),
       );
 
@@ -164,7 +165,7 @@ describe('StarwarsController', () => {
         controller.obtenerPersonaje('non-existing-id'),
       ).rejects.toThrow(NotFoundException);
 
-      expect(service.obtenerPersonajeSWAPI).toHaveBeenCalledWith(
+      expect(service.getSwapyCharacter).toHaveBeenCalledWith(
         'non-existing-id',
       );
     });
