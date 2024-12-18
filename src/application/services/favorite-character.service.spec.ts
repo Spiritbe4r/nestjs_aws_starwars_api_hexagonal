@@ -3,7 +3,7 @@ import { FavoriteCharacterService } from './favorite-character.service';
 import { IFavoriteCharacterRepository } from '../ports/repository.interface';
 import { FavoriteCharacter } from '../../domain/entities/favorite-character.entity';
 import { FavoriteCharacterMapper } from '../mappers/favorite-character.mapper';
-import { CrearFavoritoDto } from '../dto/crear-favorito.dto';
+import { CrearFavoritoDto } from '../../infrastructure/http/dto/crear-favorito.dto';
 import { ISwapiService } from '../ports/swapi.interface';
 
 export const mockSwapiService: Partial<ISwapiService> = {

@@ -1,5 +1,5 @@
-import { IFavoriteCharacterRepository } from '../../../application/ports/repository.interface';
-import { FavoriteCharacter } from '../../../domain/entities/favorite-character.entity';
+import { IFavoriteCharacterRepository } from '../../../../application/ports/repository.interface';
+import { FavoriteCharacter } from '../../../../domain/entities/favorite-character.entity';
 import { Injectable } from '@nestjs/common';
 import { FavoriteCharacterModel } from './favorite-character.model';
 

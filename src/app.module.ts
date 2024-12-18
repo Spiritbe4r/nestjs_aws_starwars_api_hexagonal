@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { StarwarsController } from './adapters/external/swapi/starwars.controller';
-import { DynamooseRepository } from './adapters/persistence/dynamoose/dynamoose.repository';
+
 import { FavoriteCharacterService } from './application/services/favorite-character.service';
-import { SwapiService } from './adapters/external/swapi/swapi.service';
+
 import { DynamooseConfig } from './infrastructure/config/dynamoose.config';
+import { SwapiService } from './infrastructure/adapters/external/swapi/swapi.service';
+import { DynamooseRepository } from './infrastructure/adapters/persistence/dynamoose/dynamoose.repository';
+import { StarwarsController } from './infrastructure/adapters/http/controllers/starwars.controller';
 
 @Module({
   imports: [

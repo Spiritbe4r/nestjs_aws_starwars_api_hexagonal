@@ -1,3 +1,5 @@
+import { STARWARS_API_FAVORITES_ROUTE, STARWARS_API_PATH, STARWARS_API_PERSONAJE_ROUTE } from './../../../../common/constants/constants';
+import { FavoriteCharacterResponseDto } from '../dto/favorite-character-response.dto';
 import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import {
   ApiBody,
@@ -6,11 +8,10 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { CrearFavoritoDto } from '../../../application/dto/crear-favorito.dto';
-import { FavoriteCharacterResponseDto } from '../../../application/dto/favorite-character-response.dto';
-import { FavoriteCharacterService } from '../../../application/services/favorite-character.service';
-import { ISwapiResponse } from './swapi.types';
-import { STARWARS_API_FAVORITES_ROUTE, STARWARS_API_PATH, STARWARS_API_PERSONAJE_ROUTE } from '../../../common/constants/constants';
+
+import { FavoriteCharacterService } from 'src/application/services/favorite-character.service';
+import { CrearFavoritoDto } from '../dto/crear-favorito.dto';
+import { ISwapiResponse } from '../../external/swapi/swapi.types';
 
 @ApiTags('StarWars')
 @Controller(STARWARS_API_PATH)

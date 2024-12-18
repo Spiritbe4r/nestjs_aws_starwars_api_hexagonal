@@ -1,11 +1,14 @@
-import { CrearFavoritoDto } from './../dto/crear-favorito.dto';
+import { CrearFavoritoDto } from './../../infrastructure/adapters/http/dto/crear-favorito.dto';
+import { ISwapiResponse } from './../../infrastructure/adapters/external/swapi/swapi.types';
+
 import { Injectable, Inject } from '@nestjs/common';
 import { IFavoriteCharacterRepository } from '../ports/repository.interface';
 import { ISwapiService } from '../ports/swapi.interface';
-import { FavoriteCharacterResponseDto } from '../dto/favorite-character-response.dto';
+
 import { FavoriteCharacterMapper } from '../mappers/favorite-character.mapper';
-import { ISwapiResponse } from '../../adapters/external/swapi/swapi.types';
+
 import { FAVORITES_CHARACTER_REPO_KEY, SWAPI_SERVICE_KEY } from '../../common/constants/constants';
+import { FavoriteCharacterResponseDto } from 'src/infrastructure/adapters/http/dto/favorite-character-response.dto';
 
 @Injectable()
 export class FavoriteCharacterService {
