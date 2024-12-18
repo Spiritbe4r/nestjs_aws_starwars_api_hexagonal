@@ -3,14 +3,14 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { StarwarsController } from './starwars.controller';
 
 import { BadRequestException, NotFoundException } from '@nestjs/common';
-import { IFavoriteCharacterRepository } from 'src/application/ports/repository.interface';
-import { ISwapiService } from 'src/application/ports/swapi.interface';
+import { IFavoriteCharacterRepository } from 'src/application/ports/output/repository.interface';
+import { ISwapiService } from 'src/application/ports/output/swapi.interface';
 import { FavoriteCharacterService } from 'src/application/services/favorite-character.service';
 
 import { FavoriteCharacter } from 'src/domain/entities/favorite-character.entity';
 import { FavoriteCharacterMapper } from 'src/application/mappers/favorite-character.mapper';
-import { CrearFavoritoDto } from '../dto/crear-favorito.dto';
-import { FavoriteCharacterResponseDto } from '../dto/favorite-character-response.dto';
+import { CrearFavoritoDto } from '../../../../application/dto/crear-favorito.dto';
+import { FavoriteCharacterResponseDto } from '../../../../application/dto/favorite-character-response.dto';
 
 export const mockRepository: Partial<IFavoriteCharacterRepository> = {
   crear: jest.fn(),

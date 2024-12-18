@@ -1,5 +1,5 @@
-import { CrearFavoritoDto } from './../../infrastructure/adapters/http/dto/crear-favorito.dto';
-import { FavoriteCharacterResponseDto } from './../../infrastructure/adapters/http/dto/favorite-character-response.dto';
+import { CrearFavoritoDto } from '../dto/crear-favorito.dto';
+import { FavoriteCharacterResponseDto } from '../dto/favorite-character-response.dto';
 import { FavoriteCharacter } from '../../domain/entities/favorite-character.entity';
 
 export class FavoriteCharacterMapper {

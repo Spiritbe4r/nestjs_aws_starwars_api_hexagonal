@@ -11,23 +11,23 @@ export class FavoriteCharacterResponseDto {
     description: 'Nombre del personaje favorito.',
     example: 'Luke Skywalker',
   })
-  nombre: string;
+  nombre?: string;
 
   @ApiProperty({
     description: 'Planeta de origen del personaje favorito.',
     example: 'Tatooine',
   })
-  planeta: string;
+  planeta?: string;
 
   @ApiProperty({
     description: 'Fecha de creación del registro.',
     example: '2024-04-27T12:34:56.789Z',
   })
-  createdAt: Date;
+  createdAt?: Date;
 
   @ApiProperty({
     description: 'Fecha de la última actualización del registro.',
     example: '2024-04-27T12:34:56.789Z',
   })
-  updatedAt: Date;
+  updatedAt?: Date;
 }

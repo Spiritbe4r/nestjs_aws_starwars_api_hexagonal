@@ -1,4 +1,4 @@
-import { FavoriteCharacter } from '../../domain/entities/favorite-character.entity';
+import { FavoriteCharacter } from '../../../domain/entities/favorite-character.entity';
 
 export interface IFavoriteCharacterRepository {
   crear(favoriteCharacter: FavoriteCharacter): Promise<FavoriteCharacter>;

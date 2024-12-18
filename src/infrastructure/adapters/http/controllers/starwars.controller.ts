@@ -1,6 +1,7 @@
-import { STARWARS_API_FAVORITES_ROUTE, STARWARS_API_PATH, STARWARS_API_PERSONAJE_ROUTE } from './../../../../common/constants/constants';
-import { FavoriteCharacterResponseDto } from '../dto/favorite-character-response.dto';
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { FavoritesUseCases } from './../../../../application/ports/input/favorites.use-cases';
+import { FAVORITES_CHARACTER_USE_CASES_KEY, STARWARS_API_FAVORITES_ROUTE, STARWARS_API_PATH, STARWARS_API_PERSONAJE_ROUTE, STARWARS_SWAGGER_API_TAG } from './../../../../common/constants/constants';
+import { FavoriteCharacterResponseDto } from '../../../../application/dto/favorite-character-response.dto';
+import { Controller, Get, Post, Body, Param, Inject } from '@nestjs/common';
 import {
   ApiBody,
   ApiOperation,
@@ -9,15 +10,15 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
-import { FavoriteCharacterService } from 'src/application/services/favorite-character.service';
-import { CrearFavoritoDto } from '../dto/crear-favorito.dto';
+import { CrearFavoritoDto } from '../../../../application/dto/crear-favorito.dto';
 import { ISwapiResponse } from '../../external/swapi/swapi.types';
 
-@ApiTags('StarWars')
+@ApiTags(STARWARS_SWAGGER_API_TAG)
 @Controller(STARWARS_API_PATH)
 export class StarwarsController {
   constructor(
-    private readonly favoriteCharacterService: FavoriteCharacterService,
+    @Inject(FAVORITES_CHARACTER_USE_CASES_KEY)
+    private readonly favoriteCharacterUseCases: FavoritesUseCases,
   ) { }
 
   @ApiOperation({ summary: 'Crear un personaje favorito' })
@@ -35,7 +36,7 @@ export class StarwarsController {
   async crearFavorito(
     @Body() crearFavoritoDto: CrearFavoritoDto,
   ): Promise<FavoriteCharacterResponseDto> {
-    return this.favoriteCharacterService.crearFavorito(crearFavoritoDto);
+    return this.favoriteCharacterUseCases.createFavorite(crearFavoritoDto);
   }
 
   @ApiOperation({ summary: 'Obtener todos los personajes favoritos' })
@@ -46,7 +47,7 @@ export class StarwarsController {
   })
   @Get(STARWARS_API_FAVORITES_ROUTE)
   async obtenerFavoritos(): Promise<FavoriteCharacterResponseDto[]> {
-    return this.favoriteCharacterService.obtenerFavoritos();
+    return this.favoriteCharacterUseCases.getFavorites();
   }
 
   @ApiOperation({ summary: 'Obtener un personaje favorito por ID con su planeta de origen.' })
@@ -67,6 +68,6 @@ export class StarwarsController {
   })
   @Get(`${STARWARS_API_PERSONAJE_ROUTE}/:id`)
   async obtenerPersonaje(@Param('id') id: string): Promise<ISwapiResponse> {
-    return this.favoriteCharacterService.obtenerPersonajeSWAPI(id);
+    return this.favoriteCharacterUseCases.getSwapyCharacter(id);
   }
 }

@@ -2,7 +2,7 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import axios from 'axios';
 import { ISwapiCharacter, ISwapiPersonaje, ISwapiPlanet } from './swapi.types';
-import { ISwapiService } from 'src/application/ports/swapi.interface';
+import { ISwapiService } from 'src/application/ports/output/swapi.interface';
 
 @Injectable()
 export class SwapiService implements ISwapiService {
