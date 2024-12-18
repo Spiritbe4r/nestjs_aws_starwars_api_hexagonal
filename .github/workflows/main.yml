@@ -1,0 +1,68 @@
+name: Deploy Lambda
+
+on:
+  push:
+    branches:
+      - main
+env:
+  AWS_REGION: us-east-2
+  LAMBDA_FUNCTION_NAME: sdfsdf
+  AWS_ROLE_TO_ASSUME: sdfdsfds
+  
+jobs:
+  deploy:
+    name: Deploy Lambda
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      # 1. Checkout del código fuente
+      - uses: actions/checkout@v3
+
+      # 2. Configuración de Node.js
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # 3. Configure AWS Credentials with direct access keys
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+          role-to-assume: ${{ env.AWS_ROLE_TO_ASSUME }}
+          role-session-name: AWSLambda_FullAccess
+      # 3. Instalar dependencias del proyecto
+      - name: Install Dependencies
+        run: npm ci
+
+      # 4. Build del proyecto NestJS
+      - name: Build NestJS Project
+        run: npm run build
+
+      # 6. Create Deployment Package
+      - name: Create Deployment Package
+        run: |
+          mkdir -p build_package
+          cp -r node_modules build_package/
+          cp package.json build_package/
+          cp -r dist/* build_package/
+          cd build_package
+          npm prune --production
+          zip -r ../code.zip .
+
+      # 7. Optional: Verify the zip file exists
+      - name: Verify code.zip exists
+        run: ls -la code.zip
+
+      # 8. Deploy to Lambda
+      - name: Deploy to Lambda
+        run: |
+          aws lambda update-function-code \
+            --function-name ${{ env.LAMBDA_FUNCTION_NAME }} \
+            --zip-file fileb://code.zip
+
