@@ -16,7 +16,7 @@ export const handler = async (event, context) => {
         'API para gestionar personajes favoritos e integrar SWAPI con arquitectura hexagonal',
       )
       .addServer('Local', `http://localhost:${process.env.PORT || 3000}`)
-      .addServer('AWS', `https://w6jcud9uf7.execute-api.us-east-2.amazonaws.com/api-docs`)
+      .addServer('AWS', `https://qz9kyxwn21.execute-api.us-east-2.amazonaws.com/api-docs`)
       .setVersion('1.0')
       .build();
     const document = SwaggerModule.createDocument(nestApp, config);

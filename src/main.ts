@@ -8,7 +8,6 @@ async function bootstrap() {
 
   app.enableCors();
 
-  // Configuración de Swagger
   const config = new DocumentBuilder()
     .setTitle('StarWars API Hexagonal')
     .setDescription('API para gestionar personajes favoritos e integrar SWAPI')
@@ -19,7 +18,6 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api-docs', app, document);
 
-  // Aplicar el filtro de excepciones global
   app.useGlobalFilters(new AllExceptionsFilter());
 
   const port = process.env.PORT || 3000;
