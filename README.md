@@ -100,8 +100,8 @@ npm run test
 
 starwars-api/
 ├── EVIDENCIAS/deploy_aws_lambda.png
-├── EVIDENCIAS/SWAPI_API_CHALLENGE.postman_collection.json
-├── EVIDENCIAS/deploy-cloud-formation.png
+├── STARWARS_API_HEXAGONAL.postman_collection.json
+├── EVIDENCIAS/deploy-in-cloud-formation.png
 ├── .serverless/
 ├── .github/workflows/main.yml
 ├── .gitignore

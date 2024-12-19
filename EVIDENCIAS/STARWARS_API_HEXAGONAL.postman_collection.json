@@ -1,0 +1,197 @@
+{
+	"info": {
+		"_postman_id": "c0e22e35-06ad-42f9-bab7-be437feed36c",
+		"name": "STARWARS_API_HEXAGONAL",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33499029"
+	},
+	"item": [
+		{
+			"name": "favorites",
+			"item": [
+				{
+					"name": "listar personajes de dynamo db",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MzM3NTE4MjQsImV4cCI6MTczMzc1NTQyNH0.S4pJZaFJD0dn7g1lCCBGzjldN0TWlg5beL7B27hAI2f-i3AuuHwawfeynX4UuKYfcvKtgo0AVGmnrLo-aBsgWQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://qz9kyxwn21.execute-api.us-east-2.amazonaws.com/api/v1/starwars/favoritos",
+							"protocol": "https",
+							"host": [
+								"qz9kyxwn21",
+								"execute-api",
+								"us-east-2",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"starwars",
+								"favoritos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create personaje en dynamo db",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n  \"nombre\": \"Leia Organa\",\r\n  \"planeta\": \"Tatooine\"\r\n \r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/starwars/favoritos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"starwars",
+								"favoritos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listar personaje y planeta desde swapi por id de personaje",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJnYXRpdG8yQGdtYWlsLmNvbSIsImlhdCI6MTczMzcyNTA5NiwiZXhwIjoxNzMzNzI4Njk2fQ.BQIJNkdrqa_WKdGU8qKoQsSdlY6MZcRmSt-LrPBZd5SQjxf4NtjvERM-LNbgsYg7rvC0rg8IFdhXfK8z4KL1Bw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://qz9kyxwn21.execute-api.us-east-2.amazonaws.com/api/v1/starwars/personaje/1",
+							"protocol": "https",
+							"host": [
+								"qz9kyxwn21",
+								"execute-api",
+								"us-east-2",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"starwars",
+								"personaje",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "documentacion swagger",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://qz9kyxwn21.execute-api.us-east-2.amazonaws.com/api-docs",
+							"protocol": "https",
+							"host": [
+								"qz9kyxwn21",
+								"execute-api",
+								"us-east-2",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"api-docs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n  \"nombre\": \"Leia Organa\",\r\n  \"planeta\": \"Tatooine\"\r\n \r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/starwars/favoritos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"starwars",
+								"favoritos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
