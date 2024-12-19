@@ -4,7 +4,7 @@
 
 ## Descripción
 
-**API Gestor de Personajes Favoritos de Star Wars** es una aplicación backend desarrollada con **NestJS** que permite a los usuarios gestionar sus personajes favoritos del universo de Star Wars. Utiliza **DynamoDB** como base de datos y **Dynamoose** como ODM para interactuar con la base de datos. La aplicación ofrece una API RESTful para crear favoritos, leer favoritos desde la bd dynamodb, consultar personajes favoritos de SWAPI, garantizando una gestión eficiente y escalable de los datos.
+**API Gestor de Personajes Favoritos de Star Wars** es una aplicación backend desarrollada con **NestJS** y con arquitectura hexagonal que permite a los usuarios gestionar sus personajes favoritos del universo de Star Wars. Utiliza **DynamoDB** como base de datos y **Dynamoose** como ODM para interactuar con la base de datos. La aplicación ofrece una API RESTful para crear favoritos, leer favoritos desde la bd dynamodb, consultar personajes favoritos de SWAPI, garantizando una gestión eficiente y escalable de los datos.
 
 ## Índice
 
@@ -47,11 +47,11 @@ Sigue estos pasos para configurar y ejecutar el proyecto en tu entorno local.
 ###  Clonar el Repositorio
 
 
-git clone https://github.com/Spiritbe4r/nestjs_aws_starwars_api
-cd nestjs_aws_starwars_api 
+git clone https://github.com/Spiritbe4r/nestjs_aws_starwars_api_hexagonal
+cd nestjs_aws_starwars_api_hexagonal
 
 ### Instalar Dependencias
-Asegúrate de tener Node.js y ppnpm instalados en tu sistema.
+Asegúrate de tener Node.js y npm instalados en tu sistema.
 
 bash
 
@@ -86,7 +86,7 @@ Acceder a la Documentación de Swagger
 Una vez que la aplicación esté en ejecución, puedes acceder a la documentación de Swagger local o en AWS navegando a la siguiente URL en tu navegador:
 
 LOCAL http://localhost:3000/api-docs
-AWS https://0bq5xp6612.execute-api.us-east-2.amazonaws.com/api-docs
+AWS https://qz9kyxwn21.execute-api.us-east-2.amazonaws.com/api-docs
 
 ### 6. Pruebas
 El proyecto incluye pruebas unitarias para asegurar el correcto funcionamiento de los componentes clave, especialmente el repositorio que interactúa con DynamoDB, ademas los controladores y servicios. Para ejecutar las pruebas unitarias, sigue estos pasos:
@@ -106,18 +106,6 @@ starwars-api/
 ├── .github/workflows/main.yml
 ├── .gitignore
 ├── src/
-│   ├── adapters/
-│   │   ├── external/
-│   │   │   └── swapi/
-│   │   │       └── swapi.service.ts
-│   │   │       └── swapi.controller.ts
-│   │   │       └── swapi.controller.spec.ts
-│   │   └── persistence/
-│   │       └── dynamoose/
-│   │           ├── favorite-character.model.ts
-│   │           ├── favorite-character.interface.ts
-│   │           └── dynamoose.repository.spec.ts
-│   │           ├── dynamoose.repository.ts
 │   ├── application/
 │   │   ├── services/
 │   │   │   ├── favorite-character.service.ts
@@ -127,8 +115,19 @@ starwars-api/
 │   │   │   └── favorite-character-response.dto.ts
 │   │   ├── mappers/
 │   │   │   └── favorite-character.mapper.ts
+│   │   ├── use-cases/
+│   │   │   └── create-favorite-character.use-case.spec.ts
+│   │   │   └── create-favorite-character.use-case.ts
+│   │   │   └── obtener-favorite-characters.use-case
+│   │   │   └── obtener-favorite-characters.use-case.spec.ts
+│   │   │   └── obtener-personaje-swapy.use-case.ts
 │   │   └── ports/
-│   │       └── repository.interface.ts
+│   │       └── input/
+│   │           └── favorites.use-cases.ts
+│   │           └── favorite-use-cases-impl.ts
+│   │       └── output/
+│   │           └── repository.interface.ts
+│   │           └── swapy.interface.ts
 │   ├── common/
 │   │   └── constants/constants.ts
 │   │   └── filters/
@@ -136,6 +135,20 @@ starwars-api/
 │   ├── infrastructure/
 │   │   └── config/
 │   │       └── dynamoose.config.ts
+│   ├── adapters/
+│   │   ├── external/
+│   │   │   └── swapi/
+│   │   │       ├── swapi.types.ts
+│   │   │       └── swapi.service.ts
+│   │   └── http/
+│   │       └── starwars.controller.spec.ts
+│   │       └── starwars.controller.ts
+│   │   └── persistence/
+│   │       └── dynamoose/
+│   │           ├── favorite-character.model.ts
+│   │           ├── favorite-character.interface.ts
+│   │           └── dynamoose.repository.spec.ts
+│   │           ├── dynamoose.repository.ts
 │   └── domain/
 │       └── entities/
 │           └── favorite-character.entity.ts

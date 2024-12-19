@@ -20,6 +20,7 @@ describe('CreateFavoriteCharacterUseCase', () => {
           provide: FAVORITES_CHARACTER_REPO_KEY,
           useValue: {
             crear: jest.fn(),
+            obtenerPersonajePorName: jest.fn(),
           },
         },
       ],

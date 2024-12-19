@@ -31,6 +31,10 @@ export class StarwarsController {
     status: 400,
     description: 'Datos inválidos proporcionados.',
   })
+  @ApiResponse({
+    status: 409,
+    description: 'Ya existe un personaje favorito con ese nombre.',
+  })
   @ApiBody({ type: CrearFavoritoDto })
   @Post(STARWARS_API_FAVORITES_ROUTE)
   async crearFavorito(

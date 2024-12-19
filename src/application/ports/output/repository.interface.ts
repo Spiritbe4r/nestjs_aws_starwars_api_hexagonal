@@ -3,4 +3,5 @@ import { FavoriteCharacter } from '../../../domain/entities/favorite-character.e
 export interface IFavoriteCharacterRepository {
   crear(favoriteCharacter: FavoriteCharacter): Promise<FavoriteCharacter>;
   obtenerTodos(): Promise<FavoriteCharacter[]>;
+  obtenerPersonajePorName(nombre: string): Promise<FavoriteCharacter>;
 }

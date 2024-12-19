@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IFavoriteCharacterRepository } from '../../../../application/ports/output/repository.interface';
 import { FavoriteCharacter } from '../../../../domain/entities/favorite-character.entity';
 import { Injectable } from '@nestjs/common';
@@ -5,6 +6,8 @@ import { FavoriteCharacterModel } from './favorite-character.model';
 
 @Injectable()
 export class DynamooseRepository implements IFavoriteCharacterRepository {
+
+
 
   /**
  * Crea un personaje favorito en la base de datos dynamo db mediante dynamoose.
@@ -49,5 +52,22 @@ export class DynamooseRepository implements IFavoriteCharacterRepository {
           item.updatedAt,
         ),
     );
+  }
+
+  async obtenerPersonajePorName(nombre: string): Promise<FavoriteCharacter> {
+    try {
+      const response = await FavoriteCharacterModel.query("nombre").eq(nombre).using('nombre-index').exec();
+      const characterDoc = response[0] || null;
+
+      return characterDoc ? new FavoriteCharacter(
+        characterDoc.id,
+        characterDoc.nombre,
+        characterDoc.planeta,
+        characterDoc.createdAt,
+        characterDoc.updatedAt,
+      ) : null;
+    } catch (error: any) {
+      console.log('Error al obtener personaje favorito', error.message);
+    }
   }
 }

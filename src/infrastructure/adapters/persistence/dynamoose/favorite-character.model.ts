@@ -9,6 +9,10 @@ const FavoriteCharacterSchema = new dynamoose.Schema(
     },
     nombre: {
       type: String,
+      index: { // Índice Secundario Global (GSI)
+        name: 'nombre-index', // Nombre del índice
+        project: true, // Proyecta todos los atributos; ajusta según necesidad
+    },
       required: true,
     },
     planeta: {

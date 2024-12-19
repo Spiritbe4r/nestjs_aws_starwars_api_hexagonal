@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { ConflictException, Inject, Injectable } from '@nestjs/common';
 import { CrearFavoritoDto } from '../../application/dto/crear-favorito.dto';
 import { FavoriteCharacterMapper } from '../mappers/favorite-character.mapper';
 import { FAVORITES_CHARACTER_REPO_KEY } from '../../common/constants/constants';
@@ -13,6 +13,10 @@ export class CreateFavoriteCharacterUseCase {
   ) {}
 
   async execute(dto: CrearFavoritoDto): Promise<FavoriteCharacterResponseDto> {
+    const existingCharacter = await this.repository.obtenerPersonajePorName(dto.nombre);
+    if (existingCharacter) {
+      throw new ConflictException('Ya existe un personaje favorito con ese nombre');
+    }
     const characterData = FavoriteCharacterMapper.toDomainEntity(dto);
     const character = await this.repository.crear(characterData);
 
