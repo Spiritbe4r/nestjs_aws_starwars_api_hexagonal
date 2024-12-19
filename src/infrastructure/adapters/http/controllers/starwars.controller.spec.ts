@@ -11,7 +11,6 @@ import { FavoriteCharacterMapper } from '../../../..//application/mappers/favori
 import { CrearFavoritoDto } from '../../../../application/dto/crear-favorito.dto';
 import { FavoriteCharacterResponseDto } from '../../../../application/dto/favorite-character-response.dto';
 import { FavoritesUseCases } from '../../../..//application/ports/input/favorites.use-cases';
-import { FavoritesUseCasesImpl } from '../../../..//application/ports/input/favorites-use-cases-impl';
 
 export const mockRepository: Partial<IFavoriteCharacterRepository> = {
   crear: jest.fn(),
@@ -34,7 +33,7 @@ export const mockFavoriteCharacterService: Partial<FavoritesUseCases> = {
 
 describe('StarwarsController', () => {
   let controller: StarwarsController;
-  let service: FavoritesUseCases;
+  let favoritesUseCases: FavoritesUseCases;
   let swapiService: ISwapiService;
 
   beforeEach(async () => {
@@ -57,7 +56,7 @@ describe('StarwarsController', () => {
     }).compile();
 
     controller = module.get<StarwarsController>(StarwarsController);
-    service = module.get<FavoritesUseCases>('FavoritesUseCases');
+    favoritesUseCases = module.get<FavoritesUseCases>('FavoritesUseCases');
     swapiService = module.get<ISwapiService>('SwapiInterface');
   });
 
@@ -85,11 +84,11 @@ describe('StarwarsController', () => {
 
     const responseDto = FavoriteCharacterMapper.toResponseDto(createdEntity);
 
-    (service.createFavorite as jest.Mock).mockResolvedValue(createdEntity);
+    (favoritesUseCases.createFavorite as jest.Mock).mockResolvedValue(createdEntity);
 
     const result = await controller.crearFavorito(createDto);
 
-    expect(service.createFavorite).toHaveBeenCalledWith(createDto);
+    expect(favoritesUseCases.createFavorite).toHaveBeenCalledWith(createDto);
     expect(result).toEqual(responseDto);
   });
 
@@ -117,16 +116,16 @@ describe('StarwarsController', () => {
           FavoriteCharacterMapper.toResponseDto(entity),
         );
 
-      (service.getFavorites as jest.Mock).mockResolvedValue(responseDtos);
+      (favoritesUseCases.getFavorites as jest.Mock).mockResolvedValue(responseDtos);
 
       const result = await controller.obtenerFavoritos();
 
-      expect(service.getFavorites).toHaveBeenCalled();
+      expect(favoritesUseCases.getFavorites).toHaveBeenCalled();
       expect(result).toEqual(responseDtos);
     });
 
     it('debe lanzasr un InternalServerErrorException cuando el servicio obtenerTodosFavoritos lanza una excepción', async () => {
-      (service.getFavorites as jest.Mock).mockRejectedValue(
+      (favoritesUseCases.getFavorites as jest.Mock).mockRejectedValue(
         new BadRequestException('Error al obtener todos'),
       );
 
@@ -134,7 +133,7 @@ describe('StarwarsController', () => {
         BadRequestException,
       );
 
-      expect(service.getFavorites).toHaveBeenCalled();
+      expect(favoritesUseCases.getFavorites).toHaveBeenCalled();
     });
   });
 
@@ -148,16 +147,16 @@ describe('StarwarsController', () => {
         updatedAt: new Date(),
       };
 
-      (service.getSwapyCharacter as jest.Mock).mockResolvedValue(favorito);
+      (favoritesUseCases.getSwapyCharacter as jest.Mock).mockResolvedValue(favorito);
 
       const result = await controller.obtenerPersonaje('1');
 
-      expect(service.getSwapyCharacter).toHaveBeenCalledWith('1');
+      expect(favoritesUseCases.getSwapyCharacter).toHaveBeenCalledWith('1');
       expect(result).toEqual(favorito);
     });
 
     it('debe lanzar NotFoundException cuando el personaje favorito no se encuentra', async () => {
-      (service.getSwapyCharacter as jest.Mock).mockRejectedValue(
+      (favoritesUseCases.getSwapyCharacter as jest.Mock).mockRejectedValue(
         new NotFoundException('Error al obtener todos'),
       );
 
@@ -165,7 +164,7 @@ describe('StarwarsController', () => {
         controller.obtenerPersonaje('non-existing-id'),
       ).rejects.toThrow(NotFoundException);
 
-      expect(service.getSwapyCharacter).toHaveBeenCalledWith(
+      expect(favoritesUseCases.getSwapyCharacter).toHaveBeenCalledWith(
         'non-existing-id',
       );
     });

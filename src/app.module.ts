@@ -23,8 +23,6 @@ import { FavoritesUseCasesImpl } from './application/ports/input/favorites-use-c
       provide: 'FavoriteCharacterRepository',
       useClass: DynamooseRepository,
     },
-    ///FavoriteCharacterService,
-    //SwapiService,
     {
       provide: 'SwapiInterface',
       useClass: SwapiService,

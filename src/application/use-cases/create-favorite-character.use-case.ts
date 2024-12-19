@@ -1,7 +1,4 @@
-// src/domain/use-cases/create-favorite-character.use-case.ts
-
 import { Inject, Injectable } from '@nestjs/common';
-import { FavoriteCharacter } from '../../domain/entities/favorite-character.entity';
 import { CrearFavoritoDto } from '../../application/dto/crear-favorito.dto';
 import { FavoriteCharacterMapper } from '../mappers/favorite-character.mapper';
 import { FAVORITES_CHARACTER_REPO_KEY } from '../../common/constants/constants';
